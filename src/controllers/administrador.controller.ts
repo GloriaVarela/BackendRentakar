@@ -38,7 +38,7 @@ export class AdministradorController {
   })
   async identificarAdministrador(
     @requestBody() credenciales:Credenciales
-  ){
+  ): Promise<{datos: {nombre: string; correo: string; id: string;}; tk: any;}>{
     let ad = await this.servicioAutenticacion.IdentificarAdministrador(credenciales.usuario, credenciales.clave);
     if(ad) {
       let token = this.servicioAutenticacion.GenerarTokenJWTAdmin(ad);
@@ -46,7 +46,7 @@ export class AdministradorController {
         datos: {
           nombre: ad.nombre,
           correo: ad.correo,
-          id: ad.id
+          id: ad.id!
         },
         tk: token
       }
